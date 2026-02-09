@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Processing…</title>
+</head>
+<body>
+  Processing…
+
+  <script>
+    // same CONFIG + getEmailHash as above
+
+    const fragment = window.location.hash.substring(1);
+    const email = fragment ? decodeURIComponent(fragment.trim()) : "";
+
+    if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      const params = new URLSearchParams();
+      params.append("ref",    "summer2025");
+      params.append("source", "email-link");
+      params.append("company", "Your Company Ltd");
+      params.append("md",     btoa(email));
+
+      window.location.replace(`web?${params}`);
+    }
+  </script>
+</body>
+</html>
